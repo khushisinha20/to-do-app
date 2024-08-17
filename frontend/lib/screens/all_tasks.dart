@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:frontend/colors/app_colors.dart';
 import 'package:frontend/widgets/button_widget.dart';
 import 'package:frontend/widgets/task_widget.dart';
+import 'package:get/get.dart';
 
 class AllTasks extends StatelessWidget {
   const AllTasks({super.key});
@@ -54,9 +55,14 @@ class AllTasks extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 20, top: 60),
                 child: Row(
                   children: [
-                    Icon(
-                      Icons.arrow_back,
-                      color: AppColors.secondaryColor,
+                    InkWell(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Icon(
+                        Icons.arrow_back,
+                        color: AppColors.secondaryColor,
+                      ),
                     ),
                   ],
                 ),
