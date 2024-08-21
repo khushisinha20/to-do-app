@@ -4,7 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math/rand"
 	"net/http"
+	"strconv"
+	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -67,7 +70,14 @@ func getTask(w http.ResponseWriter, r* http.Request) {
 }
 
 func createTask(w http.ResponseWriter, r* http.Request) {
-
+	w.Header().Set("Content-Type", "application/json")
+	var task Tasks
+	_ = json.NewDecoder(r.Body).Decode(&task)
+	task.ID = strconv.Itoa(rand.Intn(100000000))
+	currentTime := time.Now().Format("01-02-2006")
+	task.Date = currentTime
+	tasks = append(tasks, task)
+	json.NewEncoder(w).Encode(task)
 }
 
 func deleteTask(w http.ResponseWriter, r* http.Request) {
