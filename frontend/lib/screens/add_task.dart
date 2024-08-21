@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:frontend/colors/app_colors.dart';
+import 'package:frontend/controllers/data_controller.dart';
+import 'package:frontend/screens/all_tasks.dart';
 import 'package:frontend/widgets/button_widget.dart';
 import 'package:frontend/widgets/error_warning_ms.dart';
 import 'package:frontend/widgets/textfield_widget.dart';
@@ -81,7 +83,15 @@ class AddTask extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    _dataValidation();
+                    if (_dataValidation()) {
+                      Get.find<DataController>().postData(
+                          nameController.text.trim(),
+                          detailController.text.trim());
+                      Get.to(
+                        () => AllTasks(),
+                        transition: Transition.circularReveal,
+                      );
+                    }
                   },
                   child: ButtonWidget(
                       backgroundColor: AppColors.mainColor,

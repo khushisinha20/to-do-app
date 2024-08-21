@@ -2,15 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:frontend/colors/app_colors.dart';
+import 'package:frontend/controllers/data_controller.dart';
 import 'package:frontend/widgets/button_widget.dart';
 import 'package:frontend/widgets/task_widget.dart';
 import 'package:get/get.dart';
 
 class AllTasks extends StatelessWidget {
   const AllTasks({super.key});
+  _loadData() async {
+    await Get.find<DataController>().getData();
+  }
 
   @override
   Widget build(BuildContext context) {
+    print(Get.find<DataController>().MyData.length);
+    _loadData();
     List<String> myData = [
       "Try Harder",
       "Try Smarter",
