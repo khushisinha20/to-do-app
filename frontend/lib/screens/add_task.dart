@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:frontend/colors/app_colors.dart';
 import 'package:frontend/widgets/button_widget.dart';
+import 'package:frontend/widgets/error_warning_ms.dart';
 import 'package:frontend/widgets/textfield_widget.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +14,26 @@ class AddTask extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController nameController = new TextEditingController();
     TextEditingController detailController = new TextEditingController();
+
+    bool _dataValidation() {
+      if (nameController.text.trim() == '') {
+        Message.taskErrorOrWarning("Task name", "Your task name is empty");
+        return false;
+      } else if (detailController.text.trim() == '') {
+        Message.taskErrorOrWarning("Task detail", "Task detail is empty");
+        return false;
+      } else if (nameController.text.length < 10) {
+        Message.taskErrorOrWarning(
+            "Task name", "Your task should be atleast 10 characters");
+        return false;
+      } else if (detailController.text.length < 20) {
+        Message.taskErrorOrWarning(
+            "Task detail", "Task detail should be atleast 20 characters");
+        return false;
+      }
+      return true;
+    }
+
     return Scaffold(
       body: Container(
         width: double.maxFinite,
@@ -58,10 +79,15 @@ class AddTask extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                ButtonWidget(
-                    backgroundColor: AppColors.mainColor,
-                    text: "Add",
-                    textColor: Colors.white)
+                GestureDetector(
+                  onTap: () {
+                    _dataValidation();
+                  },
+                  child: ButtonWidget(
+                      backgroundColor: AppColors.mainColor,
+                      text: "Add",
+                      textColor: Colors.white),
+                )
               ],
             ),
             SizedBox(

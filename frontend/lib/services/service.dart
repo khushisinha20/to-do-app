@@ -6,4 +6,10 @@ class DataService extends GetConnect implements GetxService {
         headers: {'Content-Type': 'application/json; charset=UTF-8'});
     return response;
   }
+
+  Future<Response> postData(dynamic body) async {
+    Response response = await post("http://localhost:8082/create", body,
+        headers: {'Content-Type': 'application/json; charset=UTF-8'});
+    return response;
+  }
 }
